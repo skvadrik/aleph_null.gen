@@ -1,0 +1,82 @@
+html {
+    overflow-y: scroll;
+}
+
+body {
+    color: #404050;
+    background-color: #d0e0f0;
+    font: 1em "Courier", Courier, mono;
+    margin: 0px auto 0px auto;
+    width: 80%;
+}
+
+div#header {
+    border-bottom: 1px solid black;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+
+    padding: 0;
+}
+
+div#header a {
+    color: #c7c7c7;
+    background-color: #ededed;
+    font-size: 2.1em;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center;
+    display: block; /* fill 100% of header */
+}
+
+div#navigation {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div#navigation a {
+    background-color: #d0e0f0;
+    color: #404050;
+    font-size: 18px;
+
+    font-size: 1em;
+    text-align: right;
+}
+
+p {
+    margin: 0.5em 0 0.5em 0;
+}
+
+a {
+    text-decoration:none;
+    color: #6677ff;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: none;
+    color:#000000;
+    font-weight: bold;
+}
+
+div#footer {
+    border-top: solid 1px black;
+    color: #555;
+    font-size: 12px;
+    margin-top: 30px;
+    padding: 12px 0px 12px 0px;
+    text-align: right;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+div.info {
+    color: #555;
+    font-size: 14px;
+    font-style: italic;
+}
