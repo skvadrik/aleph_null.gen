@@ -20,28 +20,27 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    create ["archive.html"] $ do
+    create ["london.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll "posts/*london*"
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
+                    constField "title" "Лондон"              `mappend`
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
-
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- fmap (take 20) . recentFirst =<< loadAll "posts/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
+                    constField "title" "home"                `mappend`
                     defaultContext
 
             getResourceBody
@@ -56,14 +55,14 @@ main = hakyll $ do
         compile $ do
             loadAll "posts/*"
                 >>= recentFirst
-                >>= renderAtom (feedConfiguration "All posts") feedCtx
+                >>= renderAtom (feedConfiguration "all posts") feedCtx
 
     create ["feed/rss.xml"] $ do
         route idRoute
         compile $ do
             loadAll "posts/*"
                 >>= recentFirst
-                >>= renderRss (feedConfiguration "All posts") feedCtx
+                >>= renderRss (feedConfiguration "all posts") feedCtx
 
 postCtx :: Context String
 postCtx =
