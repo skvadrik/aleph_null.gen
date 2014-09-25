@@ -11,11 +11,8 @@ body {
 }
 
 div#header {
-    border-bottom: 1px solid black;
     margin-top: 1em;
     margin-bottom: 0.5em;
-
-    padding: 0;
 }
 
 div#header a {
@@ -31,15 +28,15 @@ div#header a {
 div#navigation {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+    border-bottom: 1px solid black;
+    text-align: right;
 }
 
 div#navigation a {
-    background-color: #d0e0f0;
     color: #404050;
-    font-size: 18px;
-
     font-size: 1em;
-    text-align: right;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 p {
