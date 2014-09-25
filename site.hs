@@ -1,10 +1,8 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid (mappend, mconcat)
 import           Hakyll
 
 
---------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
     match "images/*" $ do
@@ -14,12 +12,6 @@ main = hakyll $ do
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
-
-    match (fromList ["about.rst", "contact.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
@@ -59,9 +51,36 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
+    create ["feed/atom.xml"] $ do
+        route idRoute
+        compile $ do
+            loadAll "posts/*"
+                >>= recentFirst
+                >>= renderAtom (feedConfiguration "All posts") feedCtx
 
---------------------------------------------------------------------------------
+    create ["feed/rss.xml"] $ do
+        route idRoute
+        compile $ do
+            loadAll "posts/*"
+                >>= recentFirst
+                >>= renderRss (feedConfiguration "All posts") feedCtx
+
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+feedCtx :: Context String
+feedCtx = mconcat
+    [ bodyField "description"
+    , defaultContext
+    ]
+
+feedConfiguration :: String -> FeedConfiguration
+feedConfiguration title = FeedConfiguration
+    { feedTitle = "aleph null - " ++ title
+    , feedDescription = "skvadrik's blog"
+    , feedAuthorName = "Ulya Trofimovich"
+    , feedAuthorEmail = "skvadrik@gmail.com"
+    , feedRoot = "http://skvadrik.github.io/aleph_null"
+    }
