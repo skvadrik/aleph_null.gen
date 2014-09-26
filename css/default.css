@@ -3,9 +3,10 @@ html {
 }
 
 body {
-    color: #404050;
-    background-color: #d0e0f0;
+    color: #606080;
+    background-color: #e0e8f8;
     font: 1em "Courier", Courier, mono;
+    text-align: justify;
     margin: 0px auto 0px auto;
     width: 80%;
 }
@@ -33,7 +34,7 @@ div#navigation {
 }
 
 div#navigation a {
-    color: #404050;
+    color: #606080;
     font-size: 1em;
     font-weight: normal;
     text-decoration: none;
@@ -45,7 +46,7 @@ p {
 
 a {
     text-decoration:none;
-    color: #6677ff;
+    color: #9988ff;
     font-weight: bold;
 }
 
