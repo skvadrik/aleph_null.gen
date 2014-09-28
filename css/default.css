@@ -11,6 +11,17 @@ body {
     width: 80%;
 }
 
+div#content img {
+    width: 70%;
+}
+
+img {
+    display: block;
+    border: 9px solid black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 div#header {
     margin-top: 1em;
     margin-bottom: 0.5em;
