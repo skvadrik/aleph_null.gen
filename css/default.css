@@ -8,11 +8,11 @@ body {
     font: 1em "Courier", Courier, mono;
     text-align: justify;
     margin: 0px auto 0px auto;
-    width: 80%;
+    width: 70%;
 }
 
 div#content img {
-    width: 60%;
+    width: 70%;
 }
 
 img {
