@@ -12,12 +12,12 @@ body {
 }
 
 div#content img {
-    width: 70%;
+    width: 60%;
 }
 
 img {
     display: block;
-    border: 9px solid black;
+    border: 1px solid #606080;
     margin-left: auto;
     margin-right: auto;
 }
