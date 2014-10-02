@@ -12,7 +12,8 @@ body {
 }
 
 div#content img {
-    width: 70%;
+    max-width: 600px;
+    max-height: 600px;
 }
 
 img {
