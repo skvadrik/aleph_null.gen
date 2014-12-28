@@ -5,7 +5,7 @@ import           Hakyll
 
 main :: IO ()
 main = hakyll $ do
-    match "images/**" $ do
+    match ("images/**" .|. "posts/re2c/images/*") $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -13,20 +13,38 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "posts/*" $ do
+    match ("posts/re2c/*" .||. "posts/london/*") $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
+    match "posts/re2c/codez/**" $ do
+        route $ customRoute $ (++ ".txt") . toFilePath
+        compile copyFileCompiler
+
     create ["london.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*london*"
+            posts <- recentFirst =<< loadAll "posts/london/*"
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Лондон"              `mappend`
+                    defaultContext
+
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= relativizeUrls
+
+    create ["re2c.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts/re2c/*"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "re2c"                `mappend`
                     defaultContext
 
             makeItem ""
