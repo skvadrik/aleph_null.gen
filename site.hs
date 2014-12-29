@@ -5,7 +5,7 @@ import           Hakyll
 
 main :: IO ()
 main = hakyll $ do
-    match ("images/**" .|. "posts/re2c/images/*") $ do
+    match ("images/**" .||. "posts/re2c/images/*") $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -13,11 +13,18 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match ("posts/re2c/*" .||. "posts/london/*") $ do
+    match "posts/london/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "posts/re2c/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/re2c.html" postCtx
             >>= relativizeUrls
 
     match "posts/re2c/codez/**" $ do
@@ -49,7 +56,7 @@ main = hakyll $ do
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/re2c.html" archiveCtx
                 >>= relativizeUrls
 
     match "index.html" $ do
