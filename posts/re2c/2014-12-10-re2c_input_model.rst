@@ -124,7 +124,7 @@ All we need is an iterator with the following operations:
 * addition of a constant offset
 * substraction
 
-And satisfies the following constraint:
+And the following constraint:
 
 * multiple iterators may be used simultaneously
 
@@ -293,7 +293,7 @@ is there a real problem?
 
 On one hand, operations on pointer-like primitives are RE2C internals:
 they are not documented and programmers shouldn't rely on them.
-The only input model which is guaranteed to work is plain C buffer.
+The only input model which is guaranteed to work is plain buffer.
 
 On the other hand, RE2C has always exposed its internals to the programmers,
 so that they can use it with maximum efficiency.
@@ -428,7 +428,7 @@ There're two kinds of changes:
 
 From C/C++ standpoint, these changes are not essential.
 But how do we know they won't affect LEXER performance?
-One thing comes to mind: let's go down to assembly and see.
+Let's go down to assembly and see.
 
 There're three things to keep in mind: compiler, optimization level and target architecture.
 Sure, one cannot just test all configurations on an infinite number of programs.
@@ -442,12 +442,12 @@ The following plan seems reasonable:
 
 RE2C test collection has 608 tests.
 For 290 of them RE2C generates different code
-(others either check various RE2C errors or don't use complex statements).
+(others either check various error messages or don't use complex statements).
 Out of these 290, not all are valid C/C++ programs.
 
 I'll process each pair of different files as follows: C/C++ compiler ---> objdump ---> diff
 (see this `bash script <>`_ for details).
-I will use small examples (cut from real programs) and `meld <>`_ to browse the difference.
+I will use small examples (cut from real programs) and `meld <http://meldmerge.org/>`_ to browse the difference.
 
 gcc
 ===
@@ -679,12 +679,12 @@ So that subsequent copy propagation pass (.copyprop1) fails on second file:
 
 .. image:: images/asm_gcc_o1_gimple_copyprop1_483.png
 
-Seems like a bug in forward propagation.
+Looks like a bug in forward propagation.
 All these 19 tests which reveal this bug are actually different variants of the same test:
 they all reduce use of YYMARKER from two times to one, so that YYMARKER becomes a single-use variable.
 This is kind of a rare case.
 
-I searched for commit that fixes forward propagation in GCC-4.9.2:
+I searched for commit that fixes forward propagation in GCC:
 
 .. code-block:: bash
 
@@ -753,8 +753,117 @@ So what do we have after all?
 No performance regressions with GCC-4.9.2.
 Some very rare regressions due to a forward propagation bug in GCC-4.8.3, which almost vanish on -O2 and higher.
 
+clang
+=====
 
+clang-3.6.0:
 
+    +-----+-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------+
+    |     |           | compiled | different | different | different | different | different | different |
+    |     |           |          | -O0       | -O1       | -O2       | -O3       | -Ofast    | -Os       |
+    |     |           |          |           |           |           |           |           |           |
+    +-----+-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------+
+    |     | x86_64    | 227      | 224       | 20        | 18        | 18        | 18        | 18        |
+    +-----+-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------+
+    |     | armv7a    | 220      | 217       | 15        | 4         | 4         | 4         | 4         |
+    +-----+-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------+
+    |     | powerpc64 | 220      | 217       | 19        | 8         | 8         | 8         | 8         |
+    +-----+-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+-O0
+---
+--------------------------------------------------------------------------------
+
+Unlike GCC, CLANG is sensitive to decomposition of complex statements.
+In the example below, first program gets intermediate result from register,
+while second program always loads it from stack:
+
+.. image:: images/asm_clang_o0_source.png
+
+x86_64: repeated 'mov -0x4(%rbp),%rsi' on the right vs %rdi on the left
+
+.. image:: images/asm_clang_o0_x86_64.png
+
+armv7a: repeated 'ldr r0,[sp,#4]' on the right vs r1 on the left
+
+.. image:: images/asm_clang_o0_armv7a.png
+
+powerpc64: repeated 'ld r3,-16(r1)' on the right vs r4 on the left
+
+.. image:: images/asm_clang_o0_powerpc64.png
+
+This difference emerges in almost all tests,
+so CLANG with -O0 is a true performance regression (if only -O0 was about performance).
+
+-O1
+---
+--------------------------------------------------------------------------------
+
+With -O1 the difference disappears in most cases,
+but it is still evident in programs with an extra layer of indirection.
+We can induce it in our example:
+
+.. image:: images/asm_clang_o1_source.png
+
+x86_64: repeated 'mov (%rdi),%rax' on the right
+
+.. image:: images/asm_clang_o1_x86_64.png
+
+armv7a: repeated 'ldr rX,[r0]' on the right
+
+.. image:: images/asm_clang_o1_armv7a.png
+
+powerpc64: repeated 'ld rX,0(r3)' on the right
+
+.. image:: images/asm_clang_o1_powerpc64.png
+
+So CLANG with -O1 still is a performance regression in some cases.
+
+-O2 and higher
+--------------
+--------------------------------------------------------------------------------
+
+Here difference finally fades.
+
+On x86_64, all different cases are trivial.
+Either length of some memory loads is changed:
+
+.. image:: images/asm_clang_o2_x86_64_load.png
+
+which may cause changes in jump offsets, or instructions are swapped:
+
+.. image:: images/asm_clang_o2_x86_64_swapped.png
+
+On armv7a we again see a few trivial differences with memory loads and swapped instructions.
+
+On powerpc64, however, a strange 'clrlwi' emerges in all 8 different cases:
+
+.. image:: images/asm_clang_o2_powerpc64_clrlwi.png
+
+This seems completely pointless: 'clrlwi r5,r5,24' clears high-order 24 bits of r5,
+but they are already cleared by 'lbz r5,1(r4)'.
+`Bugreport <http://llvm.org/bugs/show_bug.cgi?id=22120>`_.
+
+conclusion
+----------
+--------------------------------------------------------------------------------
+
+Performance regressions with -O0 and -O1.
+No significant difference with -O2 and higher.
+
+pcc
+===
+
+`pcc-1.1.0: <http://pcc.ludd.ltu.se/>`_
+
+conclusion
+==========
+
+*In general* with reasonable optimizatios there's no difference on real-life programs.
+
+*Honestly* some performance regressions are still possible even with good optimizations
+(mostly due to bugs in compilers), see for example this `GCC bugreport <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64541>`_
+and this `CLANG bugreport <http://llvm.org/bugs/show_bug.cgi?id=22123>`_.
 
 thanks to
 =========
