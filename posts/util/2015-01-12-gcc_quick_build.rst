@@ -18,20 +18,20 @@ To build a minimal compiler (takes about 5 min on Intel Core i7):
         exit
     fi
 
-    sourcedir="$1"
+    sourcedir=$1
     builddir=$sourcedir-build
     installdir=$sourcedir-install
 
-    mkdir $builddir
-    mkdir $installdir
+    mkdir "$builddir"
+    mkdir "$installdir"
 
-    cd $builddir
-    ../$sourcedir/configure \
-        --prefix=$(pwd)/../$installdir \
+    cd "$builddir"
+    ../"$sourcedir"/configure \
+        --prefix="$(pwd)"/../"$installdir" \
         --disable-bootstrap \
         --disable-multilib \
         --disable-multiarch \
-        --enable-languages=c++ #,c, ...
+        --enable-languages=c++ #,c,...
     make -j9
     make install
 
