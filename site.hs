@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend, mconcat)
 import           Hakyll
-
+import           Control.Monad (forM_)
 
 main :: IO ()
 main = hakyll $ do
@@ -83,19 +83,15 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
-    create ["feed/atom.xml"] $ do
-        route idRoute
-        compile $ do
-            loadAll "posts/*"
-                >>= recentFirst
-                >>= renderAtom (feedConfiguration "all posts") feedCtx
-
-    create ["feed/rss.xml"] $ do
-        route idRoute
-        compile $ do
-            loadAll "posts/*"
-                >>= recentFirst
-                >>= renderRss (feedConfiguration "all posts") feedCtx
+    forM_ [ ("feed/atom.xml", renderAtom)
+          , ("feed/rss.xml", renderRss)
+          ] $ \(path, render) -> do
+        create [path] $ do
+            route idRoute
+            compile $ do
+                loadAll ("posts/london/*" .||. "posts/re2c/*" .||. "posts/util/*")
+                    >>= recentFirst
+                    >>= render (feedConfiguration "all posts") feedCtx
 
 postCtx :: Context String
 postCtx =
