@@ -1,5 +1,4 @@
 #include <sstream>
-
 class ptr_t
 {
     std::istringstream * is_;

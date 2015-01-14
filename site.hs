@@ -5,7 +5,7 @@ import           Hakyll
 
 main :: IO ()
 main = hakyll $ do
-    match ("images/**" .||. "posts/re2c/images/*") $ do
+    match ("images/**" .||. "posts/re2c/images/**") $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -17,17 +17,17 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/art.html" postCtx
             >>= relativizeUrls
 
-    match "posts/re2c/*" $ do
+    match ("posts/re2c/*" .||. "posts/util/*") $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/re2c.html" postCtx
+            >>= loadAndApplyTemplate "templates/code.html" postCtx
             >>= relativizeUrls
 
-    match "posts/re2c/codez/**" $ do
+    match ("posts/re2c/codez/**" .||. "posts/util/codez/**") $ do
         route $ customRoute $ (++ ".txt") . toFilePath
         compile copyFileCompiler
 
@@ -39,10 +39,9 @@ main = hakyll $ do
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Лондон"              `mappend`
                     defaultContext
-
             makeItem ""
                 >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/art.html" archiveCtx
                 >>= relativizeUrls
 
     create ["re2c.html"] $ do
@@ -53,10 +52,22 @@ main = hakyll $ do
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "re2c"                `mappend`
                     defaultContext
-
             makeItem ""
                 >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/re2c.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/code.html" archiveCtx
+                >>= relativizeUrls
+
+    create ["util.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "posts/util/*"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "util"                `mappend`
+                    defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/post-list.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/code.html" archiveCtx
                 >>= relativizeUrls
 
     match "index.html" $ do
@@ -65,10 +76,9 @@ main = hakyll $ do
             let indexCtx =
                     constField "title" "home" `mappend`
                     defaultContext
-
             getResourceBody
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate "templates/art.html" indexCtx
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
