@@ -1,7 +1,7 @@
-bool lex (char * YYCURSOR, const char * YYLIMIT)
+bool lex (const char * YYCURSOR, const char * const YYLIMIT)
 {
-    char * YYMARKER;
-    char * YYCTXMARKER;
+    const char * YYMARKER;
+    const char * YYCTXMARKER;
 #   define YYCTYPE   char
 #   define YYFILL(n) {}
     /*!re2c
@@ -12,6 +12,6 @@ bool lex (char * YYCURSOR, const char * YYLIMIT)
 
 int main ()
 {
-    char buffer [] = "int buffer [1024]";
+    const char buffer [] = "int buffer [1024]";
     return !lex (buffer, buffer + sizeof (buffer));
 }
