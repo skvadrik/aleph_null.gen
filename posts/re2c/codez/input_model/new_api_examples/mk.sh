@@ -1,8 +1,8 @@
 #!/bin/sh
 
-~/devel/re2c/code-git/re2c/re2c --input custom -o input_custom_istream.cpp input_custom_istream.re
-g++ -W -Wall -Wextra -Weffc++ -O2 -o input_custom_istream input_custom_istream.cpp
-./input_custom_istream
+~/devel/re2c/code-git/re2c/re2c --input custom -o input_custom_istringstream.cpp input_custom_istringstream.re
+g++ -W -Wall -Wextra -Weffc++ -O2 -o input_custom_istringstream input_custom_istringstream.cpp
+./input_custom_istringstream
 echo $?
 
 ~/devel/re2c/code-git/re2c/re2c --input custom -o input_custom_default.cpp input_custom_default.re
