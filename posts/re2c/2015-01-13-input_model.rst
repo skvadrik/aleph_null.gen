@@ -346,7 +346,7 @@ We can simply hide the new API behind a switch:
     +-----------------+--------------------------------------------+
     | YYRESTORECTX () | restore input position of trailing context |
     +-----------------+--------------------------------------------+
-    | YYHAS (n)       | ensure that enough characters are left     |
+    | YYLESSTHAN (n)  | check if less than 'n' characters are left |
     +-----------------+--------------------------------------------+
 
   This is a very generic API: it uses a bare minimum of operations needed by RE2C and makes no additional assumptions about input semantics.
@@ -367,7 +367,7 @@ We can simply hide the new API behind a switch:
     +-----------------+------+---------------------------------+
     | YYRESTORECTX () | ---> | YYCURSOR.seekg (YYCTXMARKER)    |
     +-----------------+------+---------------------------------+
-    | YYHAS (n)       | ---> | YYLIMIT - YYCURSOR.tellg () < n |
+    | YYLESSTHAN (n)  | ---> | YYLIMIT - YYCURSOR.tellg () < n |
     +-----------------+------+---------------------------------+
 
   Example program becomes that simple:
@@ -423,3 +423,15 @@ thanks to
 * Sergey Trofimovich for pointing at backward compatibility issues
   and helping with compiler dumps
 
+updates
+=======
+
+* 2015-02-23:
+  After some discussion on re2c mailing lists I realized that generic implementation of
+  "\--input istream" is impossible: some std::istream types don't support seek operations (e.g. std::cin).
+  Generic implementation must also do error handling, so it would be bloated and inefficient.
+  So for now, omit "\-- input istream".
+
+* 2015-02-23:
+  Renamed 'YYHAS(n)' to 'YYLESSTHAN(n)'.
+  This primitive actually means "is there less than 'n' input characters left?"

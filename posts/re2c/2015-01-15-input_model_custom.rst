@@ -17,7 +17,7 @@ This RE2C_ switch enables generic input API:
     YYBACKUPCTX ()
     YYRESTORE ()
     YYRESTORECTX ()
-    YYHAS (n)
+    YYLESSTHAN (n)
     ===
 
 Let's see how conventional input models fit into it.
@@ -38,7 +38,7 @@ pointers to plain buffer
     #   define YYBACKUPCTX()  ctxmarker = cursor
     #   define YYRESTORE()    cursor = marker
     #   define YYRESTORECTX() cursor = ctxmarker
-    #   define YYHAS(n)       limit - cursor < n
+    #   define YYLESSTHAN(n)  limit - cursor < n
     #   define YYFILL(n)      {}
         /*!re2c
             "int buffer " / "[" [0-9]+ "]" { return true; }
@@ -70,7 +70,7 @@ STL stream
     #   define YYBACKUPCTX()  ctxmarker = is.tellg ()
     #   define YYRESTORE()    is.seekg (marker)
     #   define YYRESTORECTX() is.seekg (ctxmarker)
-    #   define YYHAS(n)       limit - is.tellg () < n
+    #   define YYLESSTHAN(n)  limit - is.tellg () < n
     #   define YYFILL(n)      {}
         /*!re2c
             "int buffer " / "[" [0-9]+ "]" { return true; }
@@ -110,7 +110,7 @@ stdio.h
     #   define YYBACKUPCTX()  ctxmarker = ftell (f)
     #   define YYRESTORE()    fseek (f, marker, SEEK_SET)
     #   define YYRESTORECTX() fseek (f, ctxmarker, SEEK_SET)
-    #   define YYHAS(n)       limit - ftell (f) < n
+    #   define YYLESSTHAN(n)  limit - ftell (f) < n
     #   define YYFILL(n)      {}
         /*!re2c
             "int buffer " / "[" [0-9]+ "]" { return true; }
@@ -135,3 +135,9 @@ stdio.h
     }
 
 This one is not particularly efficient: I had to use 'fgets'/'ungetc' pair to emulate 'peek'.
+
+updates
+=======
+
+* 2015-02-23: Renamed 'YYHAS(n)' to 'YYLESSTHAN(n)'.
+  This primitive actually means "is there less than 'n' input characters left?"
