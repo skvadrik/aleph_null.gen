@@ -3,12 +3,12 @@ html {
 }
 
 body {
-    color: #606080;
-    background-color: #e0e8f8;
+    color: dimgray;
+    background-color: aliceblue;
     font: 1em "Courier", Courier, mono;
     text-align: justify;
     margin: 0px auto 0px auto;
-    width: 70%;
+    width: 80%;
 }
 
 div#header {
@@ -17,8 +17,8 @@ div#header {
 }
 
 div#header a {
-    color: #c7c7c7;
-    background-color: #ededed;
+    color: lightslategray;
+    background-color: gainsboro;
     font-size: 2.1em;
     font-weight: normal;
     text-decoration: none;
@@ -34,7 +34,7 @@ div#navigation {
 }
 
 div#navigation a {
-    color: #606080;
+    color: lightslategray;
     font-size: 1em;
     font-weight: normal;
     text-decoration: none;
@@ -46,13 +46,13 @@ p {
 
 a {
     text-decoration: underline;
-    color: #9988ff;
+    color: steelblue;
     font-weight: bold;
 }
 
 a:hover {
     text-decoration: underline;
-    color:#000000;
+    color:midnightblue;
     font-weight: bold;
 }
 
