@@ -1,5 +1,5 @@
 ---
-title: re2c input model: call for opinions
+title: re2c input model - call for opinions
 ---
 
 -----------------------------------

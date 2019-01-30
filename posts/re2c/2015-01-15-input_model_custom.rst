@@ -1,5 +1,5 @@
 ---
-title: "--input custom" examples
+title: --input custom examples
 ---
 
 --------------------------
