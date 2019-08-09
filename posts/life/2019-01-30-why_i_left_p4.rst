@@ -1,0 +1,65 @@
+---
+title: why i left p4
+---
+
+why i left p4
+=============
+
+so long, and thanks for all the apples!
+---------------------------------------
+
+
+Hi friends,
+
+
+    I just want to explain what happened and why I left so suddenly.
+
+    I was upset by the recent management decision to increase our developer productivity
+    by physically separating our seating places.
+    We have never been told that our interaction is a problem, and I'm sure it wasn't.
+    I talked to the management a couple of times, but I couldn't make them hear.
+    At last, I decided to put my job at risk to show them how important it was.
+    Alas, they heard me``...`` but not exactly the way I wanted. :D
+
+    I don't think one can *force* people into doing their jobs better;
+    nor do I think it is good to conceal information from people.
+    I strongly believe in relationships built on trust and respect.
+    Managers trust developers, and in return developers take personal responsibility for their projects.
+    That being said, it is way too easy to underestimate what it takes to be a manager,
+    especially from developer's standpoint.
+
+    But enough of this whining, and on to the main idea of this post!
+
+    I really want to say how much I like you people, and how grateful I am for all the good things you did.
+    I got more than I've given, and in many respects I want to be more like you.
+    Some of you are too modest to think I mean *you* personally, but nevertheless.
+    I learned a lot about
+    algorithms,
+    architectures,
+    build systems,
+    compilers,
+    debug,
+    git,
+    graph theory,
+    libraries,
+    linkers,
+    linux,
+    make,
+    multithreading,
+    translation,
+    and even a bit about programming in C++
+    (despite all my efforts to rewrite it in pure C!).
+    I never met a group of people so truly in love with C++.
+    Working in this company was like constant fun.
+
+
+    With that``...``
+
+        I'm not saying goodbye -- see you in the open source world. :)
+
+        I can be found at skvadrik@gmail.com, https://github.com/skvadrik and skvadrik on #freenode, or just here.
+
+
+``--``
+
+Ulya

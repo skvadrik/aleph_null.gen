@@ -8,5 +8,5 @@ fi
 
 for f in "$1"/*
 do
-    convert -resize 600x450 $f $f
+    convert -resize 780x538 $f $f
 done
