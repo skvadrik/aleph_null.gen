@@ -67,6 +67,7 @@ a:hover {
     font-weight: bold;
     color: white;
 }
+a:focus { outline: none; }
 
 div#footer {
     border-top: solid 1px black;
@@ -93,4 +94,16 @@ tr {
 
 td {
     padding: 0em 0.2em 0em 0.2em;
+}
+
+/* mobile phones, etc. */
+@media (max-width: 1000px) {
+    body {
+        font-size: 150%;
+        width: 98%;
+    }
+}
+
+::selection {
+  background: lightsteelblue;
 }
