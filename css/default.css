@@ -9,6 +9,7 @@ body {
     text-align: justify;
     margin: 0px auto 0px auto;
     width: 80%;
+    line-height: 1.5;
 }
 
 div#header {
@@ -17,17 +18,21 @@ div#header {
     font: Courier, mono;
 }
 
+div#content > p {
+    padding-bottom: 0.8em;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #2b506e;
     font-weight: normal;
-    margin: 1.5em 0 0.5em 0; /* padding between sections */
+    margin: 1.5em 0 1.5em 0; /* padding between sections */
 }
 
 div#header a {
     font-family: Courier, monospace;
     color: darkslategray;
     background-image: linear-gradient(to right, darkgray, gainsboro);
-    font-size: 250%;
+    font-size: 200%;
     font-weight: normal;
     text-decoration: none;
     text-align: center;
