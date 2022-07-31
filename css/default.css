@@ -106,12 +106,10 @@ div.epigraph {
 
 code {
     font: 13px monospace;
-    color: black;
     padding: 1em 1em 1em 1em;
     margin: 0 0 0 0;
-    border: 1px solid #606080;
-    border-left: 8px solid #606080;
-    background-color: #eee;
+    border: 1px dotted dimgray;
+    background-color:rgba(255, 255, 255, 0.5);
     display: block;
     white-space: pre;
     overflow: auto; /* get scroll when needed */
