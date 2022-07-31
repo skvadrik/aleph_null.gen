@@ -3,7 +3,7 @@ html {
 }
 body {
     color: #152837;
-    background-image: linear-gradient(to right, #b6e1fc, aliceblue);
+    background-image: linear-gradient(to right, #c0e1fc, seashell);
     font-family: sans-serif;
     font-size: 16px;
     text-align: justify;
@@ -104,17 +104,31 @@ div.epigraph {
     padding: 1em 0 1em 0;
 }
 
+code {
+    font: 13px monospace;
+    color: black;
+    padding: 1em 1em 1em 1em;
+    margin: 0 0 0 0;
+    border: 1px solid #606080;
+    border-left: 8px solid #606080;
+    background-color: #eee;
+    display: block;
+    white-space: pre;
+    overflow: auto; /* get scroll when needed */
+}
+
+code a {
+    text-decoration: none;
+}
+
 /* mobile phones, etc. */
 @media (max-width: 1000px) {
     body {
-        font-size: 14px;
+        font-size: 15px;
         width: 98%;
     }
-    div#header a {
-        font-size: 30px;
-    }
-    div#navigation a {
-        font-size: 26px;
+    code {
+        font: 12px monospace;
     }
 }
 
