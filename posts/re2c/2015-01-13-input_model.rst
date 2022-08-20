@@ -6,7 +6,7 @@ title: re2c input model - call for opinions
 re2c input model: call for opinions
 -----------------------------------
 
-.. _RE2C: http://re2c.org/manual.html
+.. _RE2C: https://re2c.org
 
 RE2C_ is a generator of lexical analyzers for C/C++.
 It takes a description of regular expressions, transforms it to deterministic finite automaton (DFA)

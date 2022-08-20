@@ -6,7 +6,7 @@ title: comparing assembly for similar C/C++ code
 comparing assembly for similar C/C++ code
 -----------------------------------------
 
-.. _RE2C: http://re2c.org/manual.html
+.. _RE2C: https://re2c.org
 
 .. _GENERIC: https://gcc.gnu.org/onlinedocs/gccint/GENERIC.html#GENERIC
 

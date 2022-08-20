@@ -7,9 +7,10 @@ title: Хельвеллин-2
 
 *Спасайся кто может:* `ТОЛЬКО ФОТКИ <https://photos.app.goo.gl/XE9jJ539e7dGcWaS7>`_ *в хорошем
 разрешении и без графоманского текста. Тут в блоге фотки ужаты:*
-``
-$ convert -resize 1000x750 -unsharp 0x0.5+1.0+0 -quality 100% $INPUT $OUTPUT
-``
+
+.. code-block::
+
+    $ convert -resize 1000x750 -unsharp 0x0.5+1.0+0 -quality 100% $INPUT $OUTPUT
 
 \* \* \*
 

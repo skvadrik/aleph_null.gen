@@ -106,7 +106,7 @@ div.epigraph {
     padding: 1em 0 1em 0;
 }
 
-code {
+pre > code {
     font: 13px monospace;
     padding: 1em 1em 1em 1em;
     margin: 0 0 0 0;

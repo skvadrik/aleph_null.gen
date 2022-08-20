@@ -6,7 +6,7 @@ title: --input custom examples
 "\--input custom" examples
 --------------------------
 
-.. _RE2C: http://re2c.org/manual.html
+.. _RE2C: https://re2c.org
 
 This RE2C_ switch enables generic input API:
 
