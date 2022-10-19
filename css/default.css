@@ -106,6 +106,13 @@ div.epigraph {
     padding: 1em 0 1em 0;
 }
 
+div.verse {
+    text-align: center;
+    font-style: italic;
+    padding-bottom: 0.5em;
+    line-height: 1.1;
+}
+
 pre > code {
     font: 13px monospace;
     padding: 1em 1em 1em 1em;
