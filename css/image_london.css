@@ -8,3 +8,8 @@ div#content img {
     padding: 1em 0 1em 0;
     max-width: 100%;
 }
+
+svg {
+  max-width: 100%;
+  height: auto;
+}
