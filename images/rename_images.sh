@@ -7,7 +7,7 @@ then
 fi
 
 (
-    cd $1
+    cd "$1"
     i=0
     for f in `ls *.jpg | sort` ; do
         mv $f $(printf '%03d.jpg' $i)
